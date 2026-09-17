@@ -1,0 +1,8 @@
+{
+  "name": "Lista VIP de Fornecedores de Luxo",
+  "description": "Página de alta conversão para lista oculta de fornecedores de luxo com layout moderno em roxo e branco.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
