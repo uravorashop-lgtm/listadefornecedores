@@ -45,10 +45,10 @@ export const FinalCtaSection: React.FC<FinalCtaSectionProps> = ({ onCtaClick }) 
         <button
           id="final-cta-btn"
           onClick={onCtaClick}
-          className="group w-full max-w-md py-4 px-6 bg-[#00b04a] hover:bg-[#009e42] active:scale-[0.99] text-white font-bold text-sm sm:text-base rounded-full shadow-lg shadow-black/30 transition-all flex items-center justify-center gap-2 mx-auto cursor-pointer"
+          className="group w-full max-w-md py-4 px-6 bg-emerald-700 hover:bg-emerald-800 active:scale-[0.99] text-white font-bold text-sm sm:text-base rounded-full shadow-lg shadow-black/40 transition-all flex items-center justify-center gap-2 mx-auto cursor-pointer"
         >
-          <span className="tracking-wide">QUERO MINHA LISTA VIP — R$ 37,90</span>
-          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform shrink-0" />
+          <span className="tracking-wide text-white">QUERO MINHA LISTA VIP — R$ 37,90</span>
+          <ArrowRight className="w-4 h-4 text-white group-hover:translate-x-1 transition-transform shrink-0" />
         </button>
 
         {/* Security badges */}

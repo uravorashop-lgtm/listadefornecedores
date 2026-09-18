@@ -70,10 +70,10 @@ export const OfferFeatureCard: React.FC<OfferFeatureCardProps> = ({ onCtaClick }
         <button
           id="offer-cta-button"
           onClick={onCtaClick}
-          className="group w-full py-3.5 sm:py-4 px-4 sm:px-6 bg-emerald-600 hover:bg-emerald-500 active:scale-[0.99] text-white font-bold text-sm sm:text-base rounded-full shadow-lg shadow-emerald-700/20 transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer mb-5 text-center"
+          className="group w-full py-3.5 sm:py-4 px-4 sm:px-6 bg-emerald-700 hover:bg-emerald-800 active:scale-[0.99] text-white font-bold text-sm sm:text-base rounded-full shadow-lg shadow-emerald-950/20 transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer mb-5 text-center"
         >
-          <span>QUERO MINHA LISTA VIP — R$ 37,90</span>
-          <ArrowRight className="w-4 h-4 shrink-0 group-hover:translate-x-1 transition-transform" />
+          <span className="text-white">QUERO MINHA LISTA VIP — R$ 37,90</span>
+          <ArrowRight className="w-4 h-4 shrink-0 text-white group-hover:translate-x-1 transition-transform" />
         </button>
 
         {/* Guarantee subtext */}

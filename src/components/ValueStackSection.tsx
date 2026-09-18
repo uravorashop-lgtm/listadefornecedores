@@ -79,7 +79,7 @@ export const ValueStackSection: React.FC<ValueStackSectionProps> = ({ onCtaClick
                     {item.title}
                   </span>
                 </div>
-                <span className="text-xs font-bold text-slate-400 shrink-0 ml-2">
+                <span className="text-xs font-bold text-slate-700 shrink-0 ml-2">
                   {item.originalPrice}
                 </span>
               </div>
@@ -97,10 +97,10 @@ export const ValueStackSection: React.FC<ValueStackSectionProps> = ({ onCtaClick
             92% OFF
           </div>
 
-          <span className="text-xs font-bold uppercase tracking-wider text-slate-400 mt-2">
+          <span className="text-xs font-bold uppercase tracking-wider text-slate-600 mt-2">
             Valor Total
           </span>
-          <span className="text-sm font-bold text-slate-400 line-through decoration-slate-400 mt-0.5">
+          <span className="text-sm font-bold text-slate-600 line-through decoration-slate-400 mt-0.5">
             R$ 497
           </span>
 
@@ -115,7 +115,7 @@ export const ValueStackSection: React.FC<ValueStackSectionProps> = ({ onCtaClick
             </span>
           </div>
 
-          <span className="text-xs text-slate-500 font-medium mb-5">
+          <span className="text-xs text-slate-600 font-medium mb-5">
             pagamento único
           </span>
 
@@ -123,10 +123,10 @@ export const ValueStackSection: React.FC<ValueStackSectionProps> = ({ onCtaClick
           <button
             id="value-stack-cta-button"
             onClick={onCtaClick}
-            className="group w-full py-3.5 sm:py-4 px-4 sm:px-5 bg-emerald-600 hover:bg-emerald-500 active:scale-[0.99] text-white font-bold text-xs sm:text-base rounded-full shadow-lg shadow-emerald-700/20 transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer mb-4 text-center"
+            className="group w-full py-3.5 sm:py-4 px-4 sm:px-5 bg-emerald-700 hover:bg-emerald-800 active:scale-[0.99] text-white font-bold text-xs sm:text-base rounded-full shadow-lg shadow-emerald-950/20 transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer mb-4 text-center"
           >
-            <span>QUERO MINHA LISTA VIP — R$ 37,90</span>
-            <ArrowRight className="w-4 h-4 shrink-0 group-hover:translate-x-1 transition-transform" />
+            <span className="text-white">QUERO MINHA LISTA VIP — R$ 37,90</span>
+            <ArrowRight className="w-4 h-4 shrink-0 text-white group-hover:translate-x-1 transition-transform" />
           </button>
 
           {/* Security subtext */}

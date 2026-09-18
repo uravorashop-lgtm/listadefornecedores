@@ -11,23 +11,35 @@ import { trackTestimonialsInteraction } from '../utils/analytics';
 const FEEDBACK_ITEMS = [
   {
     id: 'feedback_1',
-    defaultUrl: 'https://pub-e98fe6f2b8484822bbbe71897426f3c0.r2.dev/bolsa%202.png',
+    defaultUrl: '/images/feedback-1.webp',
+    fallbackUrl: 'https://pub-e98fe6f2b8484822bbbe71897426f3c0.r2.dev/bolsa%202.png',
     alt: 'Feedback WhatsApp Aluna 1',
+    width: 330,
+    height: 495,
   },
   {
     id: 'feedback_2',
-    defaultUrl: 'https://pub-e98fe6f2b8484822bbbe71897426f3c0.r2.dev/bolsa%203.png',
+    defaultUrl: '/images/feedback-2.webp',
+    fallbackUrl: 'https://pub-e98fe6f2b8484822bbbe71897426f3c0.r2.dev/bolsa%203.png',
     alt: 'Feedback WhatsApp Aluna 2',
+    width: 330,
+    height: 495,
   },
   {
     id: 'feedback_3',
-    defaultUrl: 'https://pub-e98fe6f2b8484822bbbe71897426f3c0.r2.dev/bolssa%201.png',
+    defaultUrl: '/images/feedback-3.webp',
+    fallbackUrl: 'https://pub-e98fe6f2b8484822bbbe71897426f3c0.r2.dev/bolssa%201.png',
     alt: 'Feedback WhatsApp Aluna 3',
+    width: 330,
+    height: 586,
   },
   {
     id: 'feedback_4',
-    defaultUrl: 'https://pub-e98fe6f2b8484822bbbe71897426f3c0.r2.dev/relogio.png',
+    defaultUrl: '/images/feedback-4.webp',
+    fallbackUrl: 'https://pub-e98fe6f2b8484822bbbe71897426f3c0.r2.dev/relogio.png',
     alt: 'Feedback WhatsApp Aluna 4',
+    width: 330,
+    height: 495,
   },
 ];
 
@@ -120,14 +132,14 @@ export const TestimonialsSection: React.FC = () => {
         </div>
 
         {/* Carousel Navigation Arrows */}
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-2">
           <button
             type="button"
             id="testimonial-prev-btn"
             onClick={scrollPrev}
             disabled={!canScrollLeft}
             aria-label="Depoimento anterior"
-            className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full border flex items-center justify-center transition-all cursor-pointer ${
+            className={`w-11 h-11 sm:w-12 sm:h-12 rounded-full border flex items-center justify-center transition-all cursor-pointer ${
               canScrollLeft
                 ? 'bg-white text-purple-950 border-purple-200 hover:bg-purple-50 shadow-sm active:scale-95'
                 : 'bg-slate-100 text-slate-300 border-slate-200 cursor-not-allowed'
@@ -142,7 +154,7 @@ export const TestimonialsSection: React.FC = () => {
             onClick={scrollNext}
             disabled={!canScrollRight}
             aria-label="Próximo depoimento"
-            className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full border flex items-center justify-center transition-all cursor-pointer ${
+            className={`w-11 h-11 sm:w-12 sm:h-12 rounded-full border flex items-center justify-center transition-all cursor-pointer ${
               canScrollRight
                 ? 'bg-white text-purple-950 border-purple-200 hover:bg-purple-50 shadow-sm active:scale-95'
                 : 'bg-slate-100 text-slate-300 border-slate-200 cursor-not-allowed'
@@ -172,8 +184,17 @@ export const TestimonialsSection: React.FC = () => {
               <img
                 src={imgUrl}
                 alt={item.alt}
+                width={item.width}
+                height={item.height}
                 loading="lazy"
+                decoding="async"
                 referrerPolicy="no-referrer"
+                onError={(e) => {
+                  const target = e.currentTarget;
+                  if (item.fallbackUrl && target.src !== item.fallbackUrl) {
+                    target.src = item.fallbackUrl;
+                  }
+                }}
                 className="w-full h-auto object-contain block select-none"
               />
             </div>
@@ -181,10 +202,10 @@ export const TestimonialsSection: React.FC = () => {
         })}
       </div>
 
-      {/* Pagination Dots */}
+      {/* Pagination Dots with 44px+ Accessible Touch Targets */}
       <div
         id="testimonials-pagination-dots"
-        className="flex items-center justify-center gap-2 mt-6"
+        className="flex items-center justify-center gap-0.5 mt-4"
       >
         {FEEDBACK_ITEMS.map((_, dotIdx) => (
           <button
@@ -192,12 +213,16 @@ export const TestimonialsSection: React.FC = () => {
             type="button"
             onClick={() => scrollToCard(dotIdx)}
             aria-label={`Ir para feedback ${dotIdx + 1}`}
-            className={`transition-all duration-300 rounded-full cursor-pointer ${
-              currentIndex === dotIdx
-                ? 'w-7 h-2 bg-purple-800'
-                : 'w-2 h-2 bg-purple-200 hover:bg-purple-300'
-            }`}
-          />
+            className="w-11 h-11 flex items-center justify-center cursor-pointer p-0"
+          >
+            <span
+              className={`block transition-all duration-300 rounded-full ${
+                currentIndex === dotIdx
+                  ? 'w-7 h-2.5 bg-purple-800'
+                  : 'w-2.5 h-2.5 bg-purple-300 hover:bg-purple-400'
+              }`}
+            />
+          </button>
         ))}
       </div>
     </section>

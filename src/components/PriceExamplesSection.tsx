@@ -42,9 +42,9 @@ export const PriceExamplesSection: React.FC<PriceExamplesSectionProps> = ({ onCt
       >
         {PRODUCT_EXAMPLES.map((product) => {
           const defaultUrls: Record<string, string> = {
-            bolsa: 'https://pub-e98fe6f2b8484822bbbe71897426f3c0.r2.dev/images%20(5).jpg',
-            joias: 'https://pub-e98fe6f2b8484822bbbe71897426f3c0.r2.dev/ChatGPT%20Image%2017%20de%20set.%20de%202026%2C%2021_40_15.png',
-            perfumes: 'https://pub-e98fe6f2b8484822bbbe71897426f3c0.r2.dev/ChatGPT%20Image%2017_09_2026%2C%2017_21_58.png',
+            bolsa: '/images/bolsa.webp',
+            joias: '/images/joias.webp',
+            perfumes: '/images/perfumes.webp',
           };
 
           return (
@@ -95,10 +95,10 @@ export const PriceExamplesSection: React.FC<PriceExamplesSectionProps> = ({ onCt
       <button
         id="price-examples-cta-button"
         onClick={onCtaClick}
-        className="group w-full max-w-xl py-3.5 sm:py-4 px-4 sm:px-6 bg-emerald-600 hover:bg-emerald-500 active:scale-[0.99] text-white font-bold text-xs sm:text-base rounded-full shadow-lg shadow-emerald-700/20 transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer text-center"
+        className="group w-full max-w-xl py-3.5 sm:py-4 px-4 sm:px-6 bg-emerald-700 hover:bg-emerald-800 active:scale-[0.99] text-white font-bold text-xs sm:text-base rounded-full shadow-lg shadow-emerald-950/20 transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer text-center"
       >
-        <span className="leading-snug">TODOS OS FORNECEDORES POR R$ 37,90 — QUERO MINHA LISTA</span>
-        <ArrowRight className="w-4 h-4 shrink-0 group-hover:translate-x-1 transition-transform" />
+        <span className="leading-snug text-white">TODOS OS FORNECEDORES POR R$ 37,90 — QUERO MINHA LISTA</span>
+        <ArrowRight className="w-4 h-4 shrink-0 text-white group-hover:translate-x-1 transition-transform" />
       </button>
     </section>
   );

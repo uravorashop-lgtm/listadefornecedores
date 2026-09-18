@@ -74,7 +74,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onCtaClick }) => {
             ref={videoRef}
             poster="/videos/video-1-1-poster.jpg"
             playsInline
-            preload="auto"
+            preload="none"
             onPlay={() => setIsPlaying(true)}
             onPause={() => setIsPlaying(false)}
             onEnded={() => setIsPlaying(false)}
@@ -125,10 +125,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onCtaClick }) => {
       <button
         id="hero-cta-button"
         onClick={onCtaClick}
-        className="group relative w-full max-w-md py-3.5 sm:py-4 px-4 sm:px-6 bg-emerald-600 hover:bg-emerald-500 active:scale-[0.99] text-white font-bold text-sm sm:text-lg rounded-full shadow-lg shadow-emerald-700/25 transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer text-center"
+        className="group relative w-full max-w-md py-3.5 sm:py-4 px-4 sm:px-6 bg-emerald-700 hover:bg-emerald-800 active:scale-[0.99] text-white font-bold text-sm sm:text-lg rounded-full shadow-lg shadow-emerald-950/25 transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer text-center"
       >
-        <span className="tracking-wide">QUERO MINHA LISTA VIP — R$ 37,90</span>
-        <ArrowRight className="w-5 h-5 shrink-0 group-hover:translate-x-1 transition-transform" />
+        <span className="tracking-wide text-white">QUERO MINHA LISTA VIP — R$ 37,90</span>
+        <ArrowRight className="w-5 h-5 shrink-0 text-white group-hover:translate-x-1 transition-transform" />
       </button>
 
       {/* Price comparison and discount tag */}

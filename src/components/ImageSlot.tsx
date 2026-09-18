@@ -50,6 +50,10 @@ export const ImageSlot: React.FC<ImageSlotProps> = ({
         <img
           src={currentUrl}
           alt={label}
+          width="400"
+          height="400"
+          loading="lazy"
+          decoding="async"
           onError={() => setHasError(true)}
           onLoad={() => setHasError(false)}
           referrerPolicy="no-referrer"

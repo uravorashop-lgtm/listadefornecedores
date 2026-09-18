@@ -80,13 +80,15 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
             <button
               onClick={() => setShowConfigUrl(!showConfigUrl)}
               title="Configurar Link de Checkout Externo (Kiwify, Hotmart, etc.)"
-              className="p-1.5 text-purple-600 hover:text-purple-900 rounded-lg hover:bg-purple-100 transition-colors cursor-pointer"
+              aria-label="Configurar Link de Checkout Externo"
+              className="p-2 text-purple-700 hover:text-purple-900 rounded-lg hover:bg-purple-100 transition-colors cursor-pointer"
             >
               <Settings className="w-4 h-4" />
             </button>
             <button
               onClick={onClose}
-              className="p-1.5 text-slate-400 hover:text-slate-700 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer"
+              aria-label="Fechar janela de checkout"
+              className="p-2 text-slate-500 hover:text-slate-800 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer"
             >
               <X className="w-4 h-4" />
             </button>
@@ -246,9 +248,9 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
                 <button
                   type="button"
                   onClick={handleSimulatePayment}
-                  className="w-full py-3.5 px-4 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm rounded-full shadow-lg shadow-emerald-700/20 transition-all flex items-center justify-center gap-1.5 cursor-pointer mt-2"
+                  className="w-full py-3.5 px-4 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-sm rounded-full shadow-lg shadow-emerald-950/20 transition-all flex items-center justify-center gap-1.5 cursor-pointer mt-2"
                 >
-                  <span>Confirmar Pagamento e Liberar Acesso</span>
+                  <span className="text-white">Confirmar Pagamento e Liberar Acesso</span>
                 </button>
               </div>
             ) : (
@@ -301,9 +303,9 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
                 <button
                   type="button"
                   onClick={handleSimulatePayment}
-                  className="w-full mt-2 py-3.5 px-4 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm rounded-full shadow-lg shadow-emerald-700/20 transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+                  className="w-full mt-2 py-3.5 px-4 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-sm rounded-full shadow-lg shadow-emerald-950/20 transition-all flex items-center justify-center gap-1.5 cursor-pointer"
                 >
-                  <span>Pagar R$ 37,90 com Cartão</span>
+                  <span className="text-white">Pagar R$ 37,90 com Cartão</span>
                 </button>
               </div>
             )}
@@ -325,3 +327,5 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
     </div>
   );
 };
+
+export default CheckoutModal;

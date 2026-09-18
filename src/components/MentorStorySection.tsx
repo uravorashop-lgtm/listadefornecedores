@@ -159,7 +159,7 @@ export const MentorStorySection: React.FC = () => {
             onClick={scrollPrev}
             disabled={!canScrollLeft}
             aria-label="Vídeo anterior"
-            className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full border flex items-center justify-center transition-all cursor-pointer ${
+            className={`w-11 h-11 sm:w-12 sm:h-12 rounded-full border flex items-center justify-center transition-all cursor-pointer ${
               canScrollLeft
                 ? 'bg-white text-slate-900 border-slate-200 hover:bg-rose-50 shadow-xs active:scale-95'
                 : 'bg-slate-100 text-slate-300 border-slate-200 cursor-not-allowed'
@@ -174,7 +174,7 @@ export const MentorStorySection: React.FC = () => {
             onClick={scrollNext}
             disabled={!canScrollRight}
             aria-label="Próximo vídeo"
-            className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full border flex items-center justify-center transition-all cursor-pointer ${
+            className={`w-11 h-11 sm:w-12 sm:h-12 rounded-full border flex items-center justify-center transition-all cursor-pointer ${
               canScrollRight
                 ? 'bg-white text-slate-900 border-slate-200 hover:bg-rose-50 shadow-xs active:scale-95'
                 : 'bg-slate-100 text-slate-300 border-slate-200 cursor-not-allowed'
@@ -213,7 +213,7 @@ export const MentorStorySection: React.FC = () => {
                   src={video.url}
                   poster={video.poster}
                   playsInline
-                  preload="auto"
+                  preload="none"
                   onEnded={() => setPlayingVideoId(null)}
                   className="w-full h-full object-cover"
                 />
@@ -247,20 +247,24 @@ export const MentorStorySection: React.FC = () => {
         })}
       </div>
 
-      {/* Pagination Dots */}
-      <div id="story-carousel-dots" className="flex items-center justify-center gap-2 mt-4 mb-8">
+      {/* Pagination Dots with 44px+ Accessible Touch Targets */}
+      <div id="story-carousel-dots" className="flex items-center justify-center gap-0.5 mt-2 mb-6">
         {STORY_VIDEOS.map((_, dotIdx) => (
           <button
             key={dotIdx}
             type="button"
             onClick={() => scrollToSlide(dotIdx)}
             aria-label={`Ir para vídeo ${dotIdx + 1}`}
-            className={`transition-all duration-300 rounded-full cursor-pointer ${
-              currentIndex === dotIdx
-                ? 'w-7 h-2 bg-[#7a1c28]'
-                : 'w-2 h-2 bg-slate-300 hover:bg-slate-400'
-            }`}
-          />
+            className="w-11 h-11 flex items-center justify-center cursor-pointer p-0"
+          >
+            <span
+              className={`block transition-all duration-300 rounded-full ${
+                currentIndex === dotIdx
+                  ? 'w-7 h-2.5 bg-[#7a1c28]'
+                  : 'w-2.5 h-2.5 bg-slate-400 hover:bg-slate-500'
+              }`}
+            />
+          </button>
         ))}
       </div>
 

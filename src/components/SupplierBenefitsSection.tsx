@@ -84,7 +84,7 @@ export const SupplierBenefitsSection: React.FC = () => {
             ref={videoRef}
             poster="/videos/video-5-1-poster.jpg"
             playsInline
-            preload="auto"
+            preload="none"
             onPlay={() => setIsPlaying(true)}
             onPause={() => setIsPlaying(false)}
             onEnded={() => setIsPlaying(false)}

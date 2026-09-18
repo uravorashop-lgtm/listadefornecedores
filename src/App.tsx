@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Suspense, lazy, useEffect } from 'react';
 import { ImageProvider } from './context/ImageContext';
 import { UrgencyBanner } from './components/UrgencyBanner';
 import { HeroSection } from './components/HeroSection';
@@ -12,14 +12,30 @@ import { FaqSection } from './components/FaqSection';
 import { MentorStorySection } from './components/MentorStorySection';
 import { FinalCtaSection } from './components/FinalCtaSection';
 import { Footer } from './components/Footer';
-import { CheckoutModal } from './components/CheckoutModal';
 import { trackBeginCheckout, useScrollDepthTracking } from './utils/analytics';
+
+// Lazy load CheckoutModal to reduce initial bundle by ~37 KB
+const CheckoutModal = lazy(() => import('./components/CheckoutModal'));
 
 function MainLandingPage() {
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
 
   // Automatically track scroll depth in GA4 (25%, 50%, 75%, 90%)
   useScrollDepthTracking();
+
+  // Prefetch checkout chunk when idle
+  useEffect(() => {
+    const prefetch = () => {
+      import('./components/CheckoutModal');
+    };
+    if ('requestIdleCallback' in window) {
+      const handle = (window as unknown as { requestIdleCallback: (cb: () => void) => number }).requestIdleCallback(prefetch);
+      return () => (window as unknown as { cancelIdleCallback: (id: number) => void }).cancelIdleCallback(handle);
+    } else {
+      const timeout = setTimeout(prefetch, 3000);
+      return () => clearTimeout(timeout);
+    }
+  }, []);
 
   const handleOpenCheckout = (source = 'unknown_cta') => {
     trackBeginCheckout(source, 37.90);
@@ -69,8 +85,12 @@ function MainLandingPage() {
       {/* 12. Footer */}
       <Footer />
 
-      {/* Checkout Modal */}
-      <CheckoutModal isOpen={isCheckoutOpen} onClose={() => setIsCheckoutOpen(false)} />
+      {/* Checkout Modal (Code-split to reduce unused JS on initial load) */}
+      {isCheckoutOpen && (
+        <Suspense fallback={null}>
+          <CheckoutModal isOpen={isCheckoutOpen} onClose={() => setIsCheckoutOpen(false)} />
+        </Suspense>
+      )}
     </div>
   );
 }

@@ -24,12 +24,12 @@ export const Footer: React.FC = () => {
         </div>
 
         {/* Disclaimer */}
-        <p className="max-w-xl text-[11px] text-slate-400 leading-relaxed">
+        <p className="max-w-xl text-[11px] text-slate-600 leading-relaxed">
           Este site não possui vínculo institucional com o WhatsApp ou marcas mencionadas. As marcas registradas pertencem aos seus respectivos proprietários. Lista VIP de fornecedores diretos para uso pessoal e revenda.
         </p>
 
         {/* Copyright */}
-        <p className="text-[11px] text-slate-400">
+        <p className="text-[11px] text-slate-600">
           © {currentYear} Lista VIP de Fornecedores de Luxo · Todos os direitos reservados.
         </p>
       </div>
