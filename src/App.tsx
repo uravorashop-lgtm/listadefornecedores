@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ImageProvider, useImages } from './context/ImageContext';
+import { ImageProvider } from './context/ImageContext';
 import { UrgencyBanner } from './components/UrgencyBanner';
 import { HeroSection } from './components/HeroSection';
 import { PriceExamplesSection } from './components/PriceExamplesSection';
@@ -9,20 +9,17 @@ import { SupplierBenefitsSection } from './components/SupplierBenefitsSection';
 import { ValueStackSection } from './components/ValueStackSection';
 import { GuaranteeSection } from './components/GuaranteeSection';
 import { FaqSection } from './components/FaqSection';
+import { MentorStorySection } from './components/MentorStorySection';
+import { FinalCtaSection } from './components/FinalCtaSection';
 import { Footer } from './components/Footer';
-import { ImageManagerModal } from './components/ImageManagerModal';
 import { CheckoutModal } from './components/CheckoutModal';
-import { Image as ImageIcon, Sparkles } from 'lucide-react';
 
 function MainLandingPage() {
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
-  const { openModalForSlot, images } = useImages();
 
   const handleOpenCheckout = () => {
     setIsCheckoutOpen(true);
   };
-
-  const configuredCount = Object.values(images).filter((url) => Boolean(url && url.trim())).length;
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#fbf9ff] via-[#ffffff] to-[#faf7ff] text-slate-800 flex flex-col font-sans selection:bg-purple-200 selection:text-purple-900">
@@ -56,29 +53,18 @@ function MainLandingPage() {
 
         {/* 9. Section 8: FAQ / Dúvidas Comuns */}
         <FaqSection />
+
+        {/* 10. Section 9: História da Mentora (Foto 1) */}
+        <MentorStorySection />
+
+        {/* 11. Section 10: Chamada Final de Decisão (Foto 2) */}
+        <FinalCtaSection onCtaClick={handleOpenCheckout} />
       </main>
 
-      {/* 10. Footer */}
+      {/* 12. Footer */}
       <Footer />
 
-      {/* Floating Action Button for Managing Image Links */}
-      <div className="fixed bottom-4 right-3 sm:bottom-5 sm:right-5 z-40 flex flex-col items-end gap-2">
-        <button
-          id="open-image-manager-btn"
-          onClick={() => openModalForSlot('hero_main')}
-          className="group px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full bg-purple-900/90 hover:bg-purple-950 text-white text-[11px] sm:text-xs font-semibold shadow-xl hover:shadow-2xl border border-purple-300/40 backdrop-blur-md flex items-center gap-1.5 sm:gap-2 transition-all transform hover:-translate-y-0.5 cursor-pointer active:scale-95"
-          title="Clique para adicionar ou gerenciar os links das fotos da página"
-        >
-          <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-purple-700 flex items-center justify-center text-purple-200 shrink-0">
-            <ImageIcon className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
-          </div>
-          <span>Configurar Fotos ({configuredCount}/15)</span>
-          <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-purple-300 group-hover:rotate-12 transition-transform shrink-0" />
-        </button>
-      </div>
-
-      {/* Modals */}
-      <ImageManagerModal />
+      {/* Checkout Modal */}
       <CheckoutModal isOpen={isCheckoutOpen} onClose={() => setIsCheckoutOpen(false)} />
     </div>
   );

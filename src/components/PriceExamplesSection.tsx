@@ -40,45 +40,55 @@ export const PriceExamplesSection: React.FC<PriceExamplesSectionProps> = ({ onCt
         id="product-cards-grid"
         className="grid grid-cols-1 sm:grid-cols-3 gap-5 w-full mb-8"
       >
-        {PRODUCT_EXAMPLES.map((product) => (
-          <div
-            key={product.id}
-            id={`product-card-${product.id}`}
-            onClick={onCtaClick}
-            className="group bg-white rounded-3xl p-3.5 border border-purple-100/80 shadow-md shadow-purple-950/5 hover:shadow-xl hover:border-purple-200 transition-all duration-300 flex flex-col text-left cursor-pointer"
-          >
-            {/* Square Image Slot with image icon placeholder */}
-            <div className="w-full mb-3.5">
-              <ImageSlot
-                id={product.imageId}
-                label={product.title}
-                aspectRatio="square"
-                rounded="rounded-2xl"
-              />
-            </div>
+        {PRODUCT_EXAMPLES.map((product) => {
+          const defaultUrls: Record<string, string> = {
+            bolsa: 'https://pub-e98fe6f2b8484822bbbe71897426f3c0.r2.dev/images%20(5).jpg',
+            joias: 'https://pub-e98fe6f2b8484822bbbe71897426f3c0.r2.dev/ChatGPT%20Image%2017%20de%20set.%20de%202026%2C%2021_40_15.png',
+            perfumes: 'https://pub-e98fe6f2b8484822bbbe71897426f3c0.r2.dev/ChatGPT%20Image%2017_09_2026%2C%2017_21_58.png',
+          };
 
-            {/* Product info */}
-            <div className="px-1 flex-1 flex flex-col justify-between">
-              <div>
-                <span className="text-xs font-medium text-slate-500 block">
-                  {product.title}
-                </span>
-                <span className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight block mt-0.5">
-                  {product.price}
-                </span>
-                <span className="text-[10px] uppercase font-bold tracking-wider text-purple-700/80 block mt-1">
-                  {product.badge}
-                </span>
+          return (
+            <div
+              key={product.id}
+              id={`product-card-${product.id}`}
+              onClick={onCtaClick}
+              className="group bg-white rounded-3xl overflow-hidden border border-purple-100/80 shadow-md shadow-purple-950/5 hover:shadow-xl hover:border-purple-200 transition-all duration-300 flex flex-col text-left cursor-pointer"
+            >
+              {/* Square Image Slot with full bleed, no borders, no padding */}
+              <div className="w-full relative aspect-square overflow-hidden bg-slate-50">
+                <ImageSlot
+                  id={product.imageId}
+                  label={product.title}
+                  aspectRatio="square"
+                  rounded="rounded-none"
+                  className="w-full h-full"
+                  defaultUrl={defaultUrls[product.id]}
+                />
               </div>
 
-              {/* Action link */}
-              <div className="mt-3 pt-2 border-t border-purple-50 flex items-center gap-1 text-xs font-semibold text-slate-600 group-hover:text-purple-700 transition-colors">
-                <span>toque para garantir</span>
-                <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+              {/* Product info */}
+              <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between">
+                <div>
+                  <span className="text-xs font-semibold text-slate-500 block">
+                    {product.title}
+                  </span>
+                  <span className="text-2xl font-black text-slate-900 tracking-tight block mt-0.5">
+                    {product.price}
+                  </span>
+                  <span className="text-[10px] uppercase font-bold tracking-wider text-purple-700 block mt-1">
+                    {product.badge}
+                  </span>
+                </div>
+
+                {/* Action link */}
+                <div className="mt-3 pt-2.5 border-t border-purple-50 flex items-center gap-1 text-xs font-semibold text-slate-600 group-hover:text-purple-700 transition-colors">
+                  <span>toque para garantir</span>
+                  <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       {/* Wide CTA button */}

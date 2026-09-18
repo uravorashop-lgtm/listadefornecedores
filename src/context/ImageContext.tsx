@@ -1,21 +1,11 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext } from 'react';
 
-interface ImageContextType {
-  images: Record<string, string>;
-  setImageUrl: (id: string, url: string) => void;
-  bulkSetImages: (newImages: Record<string, string>) => void;
-  activeModalSlot: string | null;
-  openModalForSlot: (slotId: string) => void;
-  closeModal: () => void;
-}
-
-const STORAGE_KEY = 'vip_lista_custom_images';
-
-const DEFAULT_IMAGES: Record<string, string> = {
-  hero_main: '',
-  prod_bolsa: '',
-  prod_joias: '',
-  prod_perfumes: '',
+export const SITE_IMAGES: Record<string, string> = {
+  hero_main: 'https://pub-e98fe6f2b8484822bbbe71897426f3c0.r2.dev/download.png',
+  prod_bolsa: 'https://pub-e98fe6f2b8484822bbbe71897426f3c0.r2.dev/images%20(5).jpg',
+  prod_joias: 'https://pub-e98fe6f2b8484822bbbe71897426f3c0.r2.dev/ChatGPT%20Image%2017%20de%20set.%20de%202026%2C%2021_40_15.png',
+  prod_perfumes: 'https://pub-e98fe6f2b8484822bbbe71897426f3c0.r2.dev/ChatGPT%20Image%2017_09_2026%2C%2017_21_58.png',
+  mentor_story: '',
   supplier_showcase: '',
   feedback_1: '',
   feedback_2: '',
@@ -29,70 +19,20 @@ const DEFAULT_IMAGES: Record<string, string> = {
   feedback_10: '',
 };
 
-const ImageContext = createContext<ImageContextType | undefined>(undefined);
+interface ImageContextType {
+  images: Record<string, string>;
+}
+
+const ImageContext = createContext<ImageContextType>({ images: SITE_IMAGES });
 
 export const ImageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [images, setImages] = useState<Record<string, string>>(() => {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      return saved ? { ...DEFAULT_IMAGES, ...JSON.parse(saved) } : DEFAULT_IMAGES;
-    } catch {
-      return DEFAULT_IMAGES;
-    }
-  });
-
-  const [activeModalSlot, setActiveModalSlot] = useState<string | null>(null);
-
-  useEffect(() => {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(images));
-    } catch {
-      // ignore
-    }
-  }, [images]);
-
-  const setImageUrl = (id: string, url: string) => {
-    setImages(prev => ({
-      ...prev,
-      [id]: url.trim(),
-    }));
-  };
-
-  const bulkSetImages = (newImages: Record<string, string>) => {
-    setImages(prev => ({
-      ...prev,
-      ...newImages,
-    }));
-  };
-
-  const openModalForSlot = (slotId: string) => {
-    setActiveModalSlot(slotId);
-  };
-
-  const closeModal = () => {
-    setActiveModalSlot(null);
-  };
-
   return (
-    <ImageContext.Provider
-      value={{
-        images,
-        setImageUrl,
-        bulkSetImages,
-        activeModalSlot,
-        openModalForSlot,
-        closeModal,
-      }}
-    >
+    <ImageContext.Provider value={{ images: SITE_IMAGES }}>
       {children}
     </ImageContext.Provider>
   );
 };
 
 export const useImages = () => {
-  const context = useContext(ImageContext);
-  if (!context) {
-    throw new Error('useImages must be used within an ImageProvider');
-  }
-  return context;
+  return useContext(ImageContext);
 };

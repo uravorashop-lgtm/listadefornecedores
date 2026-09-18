@@ -41,23 +41,24 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onCtaClick }) => {
         id="hero-image-card"
         className="relative w-full max-w-[340px] sm:max-w-[380px] mb-4 group"
       >
-        <div className="p-3 bg-white/95 rounded-3xl border border-purple-100 shadow-xl shadow-purple-900/5 backdrop-blur-sm transition-all duration-300">
+        <div className="w-full rounded-3xl overflow-hidden shadow-2xl shadow-purple-950/15 transition-all duration-300">
           <ImageSlot
             id="hero_main"
             label="Foto Principal (Bolsas, Caixas e Luxo)"
             aspectRatio="square"
-            rounded="rounded-2xl"
+            rounded="rounded-3xl"
             className="w-full"
+            defaultUrl="https://pub-e98fe6f2b8484822bbbe71897426f3c0.r2.dev/download.png"
           />
+        </div>
 
-          {/* Badge pinned at bottom center of the image */}
-          <div
-            id="hero-supplier-count-badge"
-            className="mt-2.5 mx-auto w-max inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-purple-50 text-purple-900 text-xs font-medium border border-purple-200/70 shadow-xs"
-          >
-            <Tag className="w-3.5 h-3.5 text-purple-600" />
-            <span>+50 fornecedores diretos</span>
-          </div>
+        {/* Badge pinned below the image */}
+        <div
+          id="hero-supplier-count-badge"
+          className="mt-3 mx-auto w-max inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-purple-50 text-purple-900 text-xs font-medium border border-purple-200/70 shadow-xs"
+        >
+          <Tag className="w-3.5 h-3.5 text-purple-600" />
+          <span>+50 fornecedores diretos</span>
         </div>
       </div>
 
