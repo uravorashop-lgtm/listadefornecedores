@@ -1,8 +1,31 @@
-import React from 'react';
-import { Zap, Gem, Users, RefreshCw, MessageSquare } from 'lucide-react';
-import { ImageSlot } from './ImageSlot';
+import React, { useRef, useState } from 'react';
+import { Zap, Gem, Users, RefreshCw, MessageSquare, Play, Pause } from 'lucide-react';
 
 export const SupplierBenefitsSection: React.FC = () => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const togglePlay = () => {
+    if (!videoRef.current) return;
+    if (videoRef.current.paused) {
+      const playPromise = videoRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => setIsPlaying(true))
+          .catch(() => {
+            if (videoRef.current) {
+              videoRef.current.muted = true;
+              videoRef.current.play();
+              setIsPlaying(true);
+            }
+          });
+      }
+    } else {
+      videoRef.current.pause();
+      setIsPlaying(false);
+    }
+  };
+
   const benefits = [
     {
       icon: Gem,
@@ -46,18 +69,44 @@ export const SupplierBenefitsSection: React.FC = () => {
         <span className="text-purple-900 font-serif-luxury italic">por 1 peça</span>
       </h2>
 
-      {/* Showcase Image Slot */}
+      {/* Showcase Video Card (No bar, Play icon centered) */}
       <div
         id="supplier-showcase-box"
-        className="w-full max-w-xs sm:max-w-sm mb-10 bg-white p-3 rounded-3xl border border-purple-100 shadow-xl shadow-purple-900/5"
+        className="w-full max-w-xs sm:max-w-sm mb-10 group select-none"
       >
-        <ImageSlot
-          id="supplier_showcase"
-          label="Foto Fornecedor Real / Pacotes & Pedidos"
-          aspectRatio="square"
-          rounded="rounded-2xl"
-          className="w-full"
-        />
+        <div
+          onClick={togglePlay}
+          className="relative w-full rounded-3xl overflow-hidden shadow-2xl shadow-purple-950/15 bg-black cursor-pointer aspect-[9/16] sm:aspect-[4/5] max-h-[480px] flex items-center justify-center border-2 border-purple-100"
+        >
+          <video
+            ref={videoRef}
+            src="https://pub-e98fe6f2b8484822bbbe71897426f3c0.r2.dev/video%205.1.mp4"
+            playsInline
+            preload="metadata"
+            onPlay={() => setIsPlaying(true)}
+            onPause={() => setIsPlaying(false)}
+            onEnded={() => setIsPlaying(false)}
+            className="w-full h-full object-cover"
+          />
+
+          {/* Central Play Icon Overlay when paused */}
+          {!isPlaying && (
+            <div className="absolute inset-0 flex items-center justify-center bg-black/25 backdrop-blur-[1px] transition-all">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-white/95 text-purple-950 flex items-center justify-center shadow-2xl shadow-black/40 border border-white/60 transform group-hover:scale-110 transition-transform">
+                <Play className="w-7 h-7 sm:w-9 sm:h-9 ml-1 fill-purple-950 text-purple-950 stroke-[1.5]" />
+              </div>
+            </div>
+          )}
+
+          {/* Subtle pause icon indicator on hover while playing */}
+          {isPlaying && (
+            <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+              <div className="w-9 h-9 rounded-full bg-black/50 backdrop-blur-sm text-white flex items-center justify-center border border-white/30">
+                <Pause className="w-4 h-4 fill-white" />
+              </div>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* 4 Feature Points List */}
