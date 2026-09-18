@@ -1,15 +1,37 @@
 import React, { useRef, useState, useEffect } from 'react';
 import {
   MessageCircleHeart,
-  CheckCheck,
   ChevronLeft,
   ChevronRight,
   Sparkles,
 } from 'lucide-react';
-import { TESTIMONIALS } from '../data/content';
-import { ImageSlot } from './ImageSlot';
+import { useImages } from '../context/ImageContext';
+
+const FEEDBACK_ITEMS = [
+  {
+    id: 'feedback_1',
+    defaultUrl: 'https://pub-e98fe6f2b8484822bbbe71897426f3c0.r2.dev/bolsa%202.png',
+    alt: 'Feedback WhatsApp Aluna 1',
+  },
+  {
+    id: 'feedback_2',
+    defaultUrl: 'https://pub-e98fe6f2b8484822bbbe71897426f3c0.r2.dev/bolsa%203.png',
+    alt: 'Feedback WhatsApp Aluna 2',
+  },
+  {
+    id: 'feedback_3',
+    defaultUrl: 'https://pub-e98fe6f2b8484822bbbe71897426f3c0.r2.dev/bolssa%201.png',
+    alt: 'Feedback WhatsApp Aluna 3',
+  },
+  {
+    id: 'feedback_4',
+    defaultUrl: 'https://pub-e98fe6f2b8484822bbbe71897426f3c0.r2.dev/relogio.png',
+    alt: 'Feedback WhatsApp Aluna 4',
+  },
+];
 
 export const TestimonialsSection: React.FC = () => {
+  const { images } = useImages();
   const carouselRef = useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
@@ -22,10 +44,9 @@ export const TestimonialsSection: React.FC = () => {
     setCanScrollLeft(scrollLeft > 10);
     setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
 
-    // Approximate active card index based on child scroll position
-    const cardWidth = 290; // approx card width + gap
+    const cardWidth = 320;
     const index = Math.round(scrollLeft / cardWidth);
-    setCurrentIndex(Math.min(Math.max(index, 0), TESTIMONIALS.length - 1));
+    setCurrentIndex(Math.min(Math.max(index, 0), FEEDBACK_ITEMS.length - 1));
   };
 
   useEffect(() => {
@@ -43,7 +64,7 @@ export const TestimonialsSection: React.FC = () => {
     if (cards[index]) {
       (cards[index] as HTMLElement).scrollIntoView({
         behavior: 'smooth',
-        inline: 'start',
+        inline: 'center',
         block: 'nearest',
       });
     }
@@ -51,13 +72,13 @@ export const TestimonialsSection: React.FC = () => {
 
   const scrollPrev = () => {
     if (carouselRef.current) {
-      carouselRef.current.scrollBy({ left: -300, behavior: 'smooth' });
+      carouselRef.current.scrollBy({ left: -320, behavior: 'smooth' });
     }
   };
 
   const scrollNext = () => {
     if (carouselRef.current) {
-      carouselRef.current.scrollBy({ left: 300, behavior: 'smooth' });
+      carouselRef.current.scrollBy({ left: 320, behavior: 'smooth' });
     }
   };
 
@@ -87,11 +108,11 @@ export const TestimonialsSection: React.FC = () => {
         Arraste para os lados e veja os feedbacks recebidos no WhatsApp pelas alunas e revendedoras
       </p>
 
-      {/* Desktop/Tablet Carousel Controls Bar */}
-      <div className="w-full flex items-center justify-between px-2 mb-3">
+      {/* Navigation Controls Bar */}
+      <div className="w-full flex items-center justify-between px-2 mb-4 max-w-4xl">
         <div className="flex items-center gap-2 text-xs font-semibold text-purple-900/80 bg-purple-50/80 px-3 py-1 rounded-full border border-purple-100">
           <Sparkles className="w-3.5 h-3.5 text-purple-600" />
-          <span>{TESTIMONIALS.length} depoimentos verificados</span>
+          <span>Feedbacks reais no WhatsApp</span>
         </div>
 
         {/* Carousel Navigation Arrows */}
@@ -128,80 +149,48 @@ export const TestimonialsSection: React.FC = () => {
         </div>
       </div>
 
-      {/* Carousel Track with smooth snap & touch swipe */}
+      {/* Carousel Track with smooth snap & touch swipe - ONLY IMAGES */}
       <div
         id="testimonials-carousel"
         ref={carouselRef}
-        className="w-full flex gap-4 sm:gap-5 overflow-x-auto no-scrollbar snap-x snap-mandatory py-3 px-1 sm:px-2 scroll-smooth items-stretch"
+        className="w-full flex gap-4 sm:gap-6 overflow-x-auto no-scrollbar snap-x snap-mandatory py-4 px-2 sm:px-4 scroll-smooth items-center"
         style={{ WebkitOverflowScrolling: 'touch' }}
       >
-        {TESTIMONIALS.map((item, idx) => (
-          <div
-            key={item.id}
-            id={`testimonial-card-${item.id}`}
-            className="snap-center shrink-0 w-[270px] sm:w-[310px] md:w-[330px] bg-white rounded-3xl p-3 sm:p-4 border border-purple-100/90 shadow-md shadow-purple-950/5 hover:shadow-xl hover:border-purple-200 transition-all duration-300 flex flex-col text-left select-none"
-          >
-            {/* Top WhatsApp-like subtle header bar */}
-            <div className="flex items-center justify-between px-2.5 py-1.5 mb-2.5 bg-slate-50/90 rounded-xl border border-slate-100 text-xs text-slate-600">
-              <div className="flex items-center gap-2 truncate">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0" />
-                <span className="font-semibold text-slate-800 truncate text-[11px]">
-                  {item.tag || `Print WhatsApp #${idx + 1}`}
-                </span>
-              </div>
-              <div className="flex items-center gap-1">
-                <span className="text-[10px] font-mono text-slate-400">#{idx + 1}</span>
-                <CheckCheck className="w-3.5 h-3.5 text-sky-500 shrink-0" />
-              </div>
-            </div>
+        {FEEDBACK_ITEMS.map((item, idx) => {
+          const imgUrl = images[item.id] || item.defaultUrl;
 
-            {/* Square/Portrait Image Slot for Print screenshot */}
-            <div className="w-full relative rounded-2xl overflow-hidden mb-3">
-              <ImageSlot
-                id={item.imageId}
-                label={`Print #${idx + 1} - ${item.highlight}`}
-                aspectRatio="portrait"
-                rounded="rounded-2xl"
-                className="w-full min-h-[240px] sm:min-h-[260px]"
+          return (
+            <div
+              key={item.id}
+              id={`feedback-card-${idx + 1}`}
+              className="snap-center shrink-0 w-[270px] sm:w-[310px] md:w-[330px] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg shadow-purple-950/10 border border-purple-100/90 bg-white transition-all duration-300 hover:shadow-2xl hover:scale-[1.01]"
+            >
+              <img
+                src={imgUrl}
+                alt={item.alt}
+                loading="lazy"
+                referrerPolicy="no-referrer"
+                className="w-full h-auto object-contain block select-none"
               />
             </div>
-
-            {/* Snippet text */}
-            <div className="px-1.5 pb-1 flex-1 flex flex-col justify-between">
-              <div>
-                <p className="text-xs sm:text-sm font-bold text-slate-900 leading-snug line-clamp-2">
-                  "{item.highlight}"
-                </p>
-                <p className="text-[11px] text-slate-500 mt-1 italic leading-relaxed line-clamp-2">
-                  {item.previewText}
-                </p>
-              </div>
-
-              <div className="mt-2.5 pt-2 border-t border-purple-50 flex items-center justify-between text-[10px] text-slate-400 font-medium">
-                <span>Compra verificada</span>
-                <span className="text-emerald-700 font-semibold flex items-center gap-0.5">
-                  ✓ Aluna VIP
-                </span>
-              </div>
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
-      {/* Responsive Pagination Dots with tap-to-scroll */}
+      {/* Pagination Dots */}
       <div
         id="testimonials-pagination-dots"
-        className="flex items-center justify-center gap-1.5 mt-5 flex-wrap max-w-xs mx-auto"
+        className="flex items-center justify-center gap-2 mt-6"
       >
-        {TESTIMONIALS.map((_, dotIdx) => (
+        {FEEDBACK_ITEMS.map((_, dotIdx) => (
           <button
             key={dotIdx}
             type="button"
             onClick={() => scrollToCard(dotIdx)}
-            aria-label={`Ir para depoimento ${dotIdx + 1}`}
+            aria-label={`Ir para feedback ${dotIdx + 1}`}
             className={`transition-all duration-300 rounded-full cursor-pointer ${
               currentIndex === dotIdx
-                ? 'w-6 h-2 bg-purple-800'
+                ? 'w-7 h-2 bg-purple-800'
                 : 'w-2 h-2 bg-purple-200 hover:bg-purple-300'
             }`}
           />
