@@ -11,6 +11,7 @@ import {
   ExternalLink,
   Settings,
 } from 'lucide-react';
+import { trackPaymentInteraction, trackPurchase, trackEvent } from '../utils/analytics';
 
 interface CheckoutModalProps {
   isOpen: boolean;
@@ -33,11 +34,26 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
       '00020126580014br.gov.bcb.pix0136lista-vip-fornecedores-luxo-3790520400005303986540537.905802BR5925LISTA VIP FORNECEDORES6009SAO PAULO62070503***6304E8A9'
     );
     setPixCopied(true);
+    trackPaymentInteraction('pix_copied', 'pix');
     setTimeout(() => setPixCopied(false), 2500);
   };
 
   const handleSimulatePayment = () => {
+    trackPurchase(paymentMethod, 37.90);
     setPaymentSuccess(true);
+  };
+
+  const handleMethodChange = (method: 'pix' | 'card') => {
+    setPaymentMethod(method);
+    trackPaymentInteraction('method_selected', method);
+  };
+
+  const handleExternalCheckoutClick = () => {
+    trackEvent('external_checkout_click', {
+      destination_url: customCheckoutUrl,
+      value: 37.90,
+      currency: 'BRL',
+    });
   };
 
   const handleSaveCheckoutUrl = (e: React.FormEvent) => {
@@ -155,6 +171,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
                 href={customCheckoutUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={handleExternalCheckoutClick}
                 className="w-full mb-4 py-3.5 px-4 bg-purple-900 hover:bg-purple-800 text-white font-bold text-sm rounded-xl flex items-center justify-center gap-2 shadow-md transition-all"
               >
                 <span>Ir para Checkout Oficial</span>
@@ -166,7 +183,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
             <div className="grid grid-cols-2 gap-2 p-1 bg-slate-100 rounded-xl mb-5">
               <button
                 type="button"
-                onClick={() => setPaymentMethod('pix')}
+                onClick={() => handleMethodChange('pix')}
                 className={`py-2 px-3 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
                   paymentMethod === 'pix'
                     ? 'bg-white text-purple-950 shadow-xs'
@@ -179,7 +196,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose })
 
               <button
                 type="button"
-                onClick={() => setPaymentMethod('card')}
+                onClick={() => handleMethodChange('card')}
                 className={`py-2 px-3 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
                   paymentMethod === 'card'
                     ? 'bg-white text-purple-950 shadow-xs'

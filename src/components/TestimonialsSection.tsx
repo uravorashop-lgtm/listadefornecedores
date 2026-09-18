@@ -6,6 +6,7 @@ import {
   Sparkles,
 } from 'lucide-react';
 import { useImages } from '../context/ImageContext';
+import { trackTestimonialsInteraction } from '../utils/analytics';
 
 const FEEDBACK_ITEMS = [
   {
@@ -67,18 +68,21 @@ export const TestimonialsSection: React.FC = () => {
         inline: 'center',
         block: 'nearest',
       });
+      trackTestimonialsInteraction(index);
     }
   };
 
   const scrollPrev = () => {
     if (carouselRef.current) {
       carouselRef.current.scrollBy({ left: -320, behavior: 'smooth' });
+      trackTestimonialsInteraction(Math.max(currentIndex - 1, 0));
     }
   };
 
   const scrollNext = () => {
     if (carouselRef.current) {
       carouselRef.current.scrollBy({ left: 320, behavior: 'smooth' });
+      trackTestimonialsInteraction(Math.min(currentIndex + 1, FEEDBACK_ITEMS.length - 1));
     }
   };
 

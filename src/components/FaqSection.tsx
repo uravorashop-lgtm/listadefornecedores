@@ -1,12 +1,19 @@
 import React, { useState } from 'react';
 import { HelpCircle, ChevronDown } from 'lucide-react';
 import { FAQ_ITEMS } from '../data/content';
+import { trackFaqClick } from '../utils/analytics';
 
 export const FaqSection: React.FC = () => {
   const [openId, setOpenId] = useState<string | null>(null);
 
-  const toggleItem = (id: string) => {
-    setOpenId((prev) => (prev === id ? null : id));
+  const toggleItem = (id: string, question: string) => {
+    setOpenId((prev) => {
+      const willOpen = prev !== id;
+      if (willOpen) {
+        trackFaqClick(question);
+      }
+      return willOpen ? id : null;
+    });
   };
 
   return (
@@ -42,7 +49,7 @@ export const FaqSection: React.FC = () => {
             >
               <button
                 type="button"
-                onClick={() => toggleItem(item.id)}
+                onClick={() => toggleItem(item.id, item.question)}
                 className="w-full py-4 px-5 flex items-center justify-between gap-3 text-left hover:bg-purple-50/40 transition-colors cursor-pointer"
               >
                 <span className="text-xs sm:text-sm font-semibold text-slate-800">

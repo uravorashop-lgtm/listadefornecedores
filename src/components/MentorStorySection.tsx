@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Play, Pause, ChevronLeft, ChevronRight, Sparkles } from 'lucide-react';
+import { trackVideoPlay } from '../utils/analytics';
 
 interface StoryVideo {
   id: number;
@@ -78,6 +79,11 @@ export const MentorStorySection: React.FC = () => {
       });
 
       // Play target video
+      const currentVideoData = STORY_VIDEOS[idx];
+      if (currentVideoData) {
+        trackVideoPlay(currentVideoData.title, currentVideoData.url);
+      }
+
       const playPromise = targetVideo.play();
       if (playPromise !== undefined) {
         playPromise

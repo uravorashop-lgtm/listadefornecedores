@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { Zap, Gem, Users, RefreshCw, MessageSquare, Play, Pause } from 'lucide-react';
+import { trackVideoPlay } from '../utils/analytics';
 
 export const SupplierBenefitsSection: React.FC = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -8,6 +9,7 @@ export const SupplierBenefitsSection: React.FC = () => {
   const togglePlay = () => {
     if (!videoRef.current) return;
     if (videoRef.current.paused) {
+      trackVideoPlay('Vídeo Fornecedor Atende por 1 Peça', '/videos/video-5-1.mp4');
       const playPromise = videoRef.current.play();
       if (playPromise !== undefined) {
         playPromise

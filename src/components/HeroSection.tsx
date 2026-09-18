@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { Sparkles, ArrowRight, Tag, Heart, Play, Pause } from 'lucide-react';
+import { trackVideoPlay } from '../utils/analytics';
 
 interface HeroSectionProps {
   onCtaClick: () => void;
@@ -12,6 +13,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onCtaClick }) => {
   const togglePlay = () => {
     if (!videoRef.current) return;
     if (videoRef.current.paused) {
+      trackVideoPlay('Vídeo de Apresentação Hero', '/videos/video-1-1.mp4');
       const playPromise = videoRef.current.play();
       if (playPromise !== undefined) {
         playPromise

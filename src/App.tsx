@@ -13,11 +13,16 @@ import { MentorStorySection } from './components/MentorStorySection';
 import { FinalCtaSection } from './components/FinalCtaSection';
 import { Footer } from './components/Footer';
 import { CheckoutModal } from './components/CheckoutModal';
+import { trackBeginCheckout, useScrollDepthTracking } from './utils/analytics';
 
 function MainLandingPage() {
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
 
-  const handleOpenCheckout = () => {
+  // Automatically track scroll depth in GA4 (25%, 50%, 75%, 90%)
+  useScrollDepthTracking();
+
+  const handleOpenCheckout = (source = 'unknown_cta') => {
+    trackBeginCheckout(source, 37.90);
     setIsCheckoutOpen(true);
   };
 
@@ -28,16 +33,16 @@ function MainLandingPage() {
 
       <main className="flex-1 w-full overflow-x-hidden">
         {/* 2. Hero Section */}
-        <HeroSection onCtaClick={handleOpenCheckout} />
+        <HeroSection onCtaClick={() => handleOpenCheckout('hero_section')} />
 
         {/* Subtle decorative divider */}
         <div className="w-24 h-0.5 bg-gradient-to-r from-transparent via-purple-200 to-transparent mx-auto my-4" />
 
         {/* 3. Section 2: Preços da Lista */}
-        <PriceExamplesSection onCtaClick={handleOpenCheckout} />
+        <PriceExamplesSection onCtaClick={() => handleOpenCheckout('price_examples_section')} />
 
         {/* 4. Section 3: O que você recebe ao entrar */}
-        <OfferFeatureCard onCtaClick={handleOpenCheckout} />
+        <OfferFeatureCard onCtaClick={() => handleOpenCheckout('offer_feature_card')} />
 
         {/* 5. Section 4: Histórias reais de quem já tem a lista */}
         <TestimonialsSection />
@@ -46,7 +51,7 @@ function MainLandingPage() {
         <SupplierBenefitsSection />
 
         {/* 7. Section 6: O que você recebe hoje (Bento stack) */}
-        <ValueStackSection onCtaClick={handleOpenCheckout} />
+        <ValueStackSection onCtaClick={() => handleOpenCheckout('value_stack_section')} />
 
         {/* 8. Section 7: Garantia Incondicional 7 Dias */}
         <GuaranteeSection />
@@ -58,7 +63,7 @@ function MainLandingPage() {
         <MentorStorySection />
 
         {/* 11. Section 10: Chamada Final de Decisão (Foto 2) */}
-        <FinalCtaSection onCtaClick={handleOpenCheckout} />
+        <FinalCtaSection onCtaClick={() => handleOpenCheckout('final_cta_section')} />
       </main>
 
       {/* 12. Footer */}
