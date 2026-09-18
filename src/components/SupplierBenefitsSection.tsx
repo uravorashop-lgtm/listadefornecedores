@@ -76,18 +76,21 @@ export const SupplierBenefitsSection: React.FC = () => {
       >
         <div
           onClick={togglePlay}
-          className="relative w-full rounded-3xl overflow-hidden shadow-2xl shadow-purple-950/15 bg-black cursor-pointer aspect-[9/16] sm:aspect-[4/5] max-h-[480px] flex items-center justify-center border-2 border-purple-100"
+          className="relative w-full rounded-3xl overflow-hidden shadow-2xl shadow-purple-950/15 bg-slate-900 cursor-pointer aspect-[9/16] sm:aspect-[4/5] max-h-[480px] flex items-center justify-center border-2 border-purple-100"
         >
           <video
             ref={videoRef}
-            src="https://pub-e98fe6f2b8484822bbbe71897426f3c0.r2.dev/video%205.1.mp4"
+            poster="/videos/video-5-1-poster.jpg"
             playsInline
-            preload="metadata"
+            preload="auto"
             onPlay={() => setIsPlaying(true)}
             onPause={() => setIsPlaying(false)}
             onEnded={() => setIsPlaying(false)}
             className="w-full h-full object-cover"
-          />
+          >
+            <source src="/videos/video-5-1.mp4" type="video/mp4" />
+            <source src="https://pub-e98fe6f2b8484822bbbe71897426f3c0.r2.dev/video%205.1.mp4" type="video/mp4" />
+          </video>
 
           {/* Central Play Icon Overlay when paused */}
           {!isPlaying && (

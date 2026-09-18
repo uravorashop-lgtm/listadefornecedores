@@ -6,6 +6,7 @@ interface StoryVideo {
   title: string;
   subtitle: string;
   url: string;
+  poster: string;
 }
 
 const STORY_VIDEOS: StoryVideo[] = [
@@ -14,18 +15,21 @@ const STORY_VIDEOS: StoryVideo[] = [
     title: 'Bastidores & Garimpo',
     subtitle: 'Comprando direto nos galpões',
     url: 'https://pub-e98fe6f2b8484822bbbe71897426f3c0.r2.dev/video%201.mp4',
+    poster: '/videos/video-1-poster.jpg',
   },
   {
     id: 2,
     title: 'Qualidade & Detalhes',
     subtitle: 'Acabamento premium de primeira linha',
     url: 'https://pub-e98fe6f2b8484822bbbe71897426f3c0.r2.dev/video%202.mp4',
+    poster: '/videos/video-2-poster.jpg',
   },
   {
     id: 3,
     title: 'Preço de Fábrica',
     subtitle: 'O valor que as lojas não revelam',
     url: 'https://pub-e98fe6f2b8484822bbbe71897426f3c0.r2.dev/video%203.mp4',
+    poster: '/videos/video-3-poster.jpg',
   },
 ];
 
@@ -201,8 +205,9 @@ export const MentorStorySection: React.FC = () => {
                     videoRefs.current[idx] = el;
                   }}
                   src={video.url}
+                  poster={video.poster}
                   playsInline
-                  preload="metadata"
+                  preload="auto"
                   onEnded={() => setPlayingVideoId(null)}
                   className="w-full h-full object-cover"
                 />

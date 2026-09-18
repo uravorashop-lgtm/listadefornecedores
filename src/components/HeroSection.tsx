@@ -70,14 +70,17 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onCtaClick }) => {
         >
           <video
             ref={videoRef}
-            src="https://pub-e98fe6f2b8484822bbbe71897426f3c0.r2.dev/video%201.1.mp4"
+            poster="/videos/video-1-1-poster.jpg"
             playsInline
-            preload="metadata"
+            preload="auto"
             onPlay={() => setIsPlaying(true)}
             onPause={() => setIsPlaying(false)}
             onEnded={() => setIsPlaying(false)}
             className="w-full h-full object-cover"
-          />
+          >
+            <source src="/videos/video-1-1.mp4" type="video/mp4" />
+            <source src="https://pub-e98fe6f2b8484822bbbe71897426f3c0.r2.dev/video%201.1.mp4" type="video/mp4" />
+          </video>
 
           {/* Central Play Icon Overlay when paused */}
           {!isPlaying && (
